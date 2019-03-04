@@ -6,8 +6,8 @@
 #define RIGHT 77
 #define UP 72
 #define DOWN 80
-#define SPEED_DISCOUNT 3
-#define SPEED_MIN 30
+#define SPEED_DISCOUNT 1
+#define SPEED_MIN 70
 
 int length = 1;
 int direction = DOWN;
@@ -29,7 +29,7 @@ int main()
 {
 	setcursortype(NOCURSOR);
 	randomize();
-	snake[0] = 0;
+	snake[0] = rand() % ((SIZE_X*SIZE_Y) / 2);
 	create_food();
 	draw_field();
 	while (1)
@@ -115,8 +115,8 @@ void draw_snake()
 			gotoxy(2 * j + 2, i + 1);
 			if (field[i][j] == FOOD)
 				printf("¡Ú");
-			else
-				printf("  ");
+			//else
+				//printf("  ");
 		}
 	SetColor(GREEN);
 	for (int i = 0; i < length; i++)
