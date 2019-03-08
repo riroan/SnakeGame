@@ -3,4 +3,4 @@ Simple Console Snake Game
 
 It will be updated
 
-+ Algorithm based AI
+3/9 Algorithm based AI
