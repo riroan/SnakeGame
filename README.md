@@ -3,5 +3,7 @@
 Simple Console Snake Game
 
 ## 특이사항
-- 윈도우 기반
+### C
 - 콘솔
+### python
+- by pygame
