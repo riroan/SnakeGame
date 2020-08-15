@@ -1,4 +1,5 @@
-# SnakeGame
+SnakeGame
+=========
 
 Simple Console Snake Game
 
@@ -6,4 +7,6 @@ Simple Console Snake Game
 ### C
 - 콘솔
 ### python
-- by pygame with AI variational astar
+- by pygame with AI
+
+> Tree search Algorithm
