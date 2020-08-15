@@ -6,4 +6,4 @@ Simple Console Snake Game
 ### C
 - 콘솔
 ### python
-- by pygame
+- by pygame with AI variational astar
