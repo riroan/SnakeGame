@@ -12,8 +12,8 @@ RED   = (255,  0,  0)
 GREY  = (128,128,128)
 
 TILE_SIZE = (30,30)
-ROW = 20
-COL = 20
+ROW = 10
+COL = 10
 WIDTH = 20+30*COL
 HEIGHT = 20+30*ROW
 
@@ -32,7 +32,7 @@ pygame.init()
 pygame.display.set_caption("Snake Game")
 clock = pygame.time.Clock()
 
-FPS = 7
+FPS = 15
 start = False
 
 #============================================Class, Function========================================#
@@ -47,24 +47,22 @@ class Environment:
     def __init__(self, human = False):
         self.direction = RIGHT
         self.body = [ROW * COL // 4 + 2]
-        self.length = len(self.body)
         self.die = False
         self.win = False
         self.eat = False
         self.done = self.win or self.die
-        self.food_pos = ROW*COL//3
+        self.food_pos = random.randrange(0,ROW*COL)
         self.flag = False
         self.human = human
     
     def reset(self):
         self.direction = RIGHT
         self.body = [ROW*COL // 4 + 2]
-        self.length = len(self.body)
         self.die = False
         self.win = False
         self.eat = False
         self.done = self.win or self.die
-        self.food_pos = ROW*COL//3
+        self.food_pos = random.randrange(0,ROW*COL)
     
     def draw(self, pos, color):
         dx = 0
@@ -168,6 +166,35 @@ class Environment:
                 actions = [(self.turn_side("none", item[1]),"none"),(self.turn_side("left", item[1]),"left"),(self.turn_side("right", item[1]),"right")]
                 body = item[0]
                 break
+        
+    # recursive version
+    def astar2(self, body, direction, directions = []):
+        actions = [(self.turn_side("none", direction),"none"),(self.turn_side("left", direction),"left"),(self.turn_side("right", direction),"right")]
+        body = body.copy()
+        
+        items = [self.simulate(action[1], body, action[0]) for action in actions]
+        items = sorted(items, key = lambda x:x[3])
+            
+        if items[0][3] == -1 and items[1][3] == -1 and items[2][3] == -1:
+            del directions[-1]
+            return False
+            
+        for item in items:
+            if item[3] == -1:
+                continue
+            directions.append(item[2])
+            if item[3] == 0:
+                return True
+            result = self.astar2(item[0], item[1], directions)
+            if result:
+                return True
+            
+        try:
+            del directions[-1]
+        except:
+            return True
+        
+        return False
     
     def get_score(self, x1, x2, y1, y2):
         return 2 * (abs(x1-x2) + abs(y1-y2))
@@ -235,7 +262,8 @@ action = 0
 directions = []
 while not env.done and not human.done:
     if not directions:
-        directions = env.astar()
+        #directions = env.astar()
+        env.astar2(env.body, env.direction, directions)
         print(directions)
     for event in pygame.event.get():
         if event.type == KEYDOWN:
@@ -249,7 +277,7 @@ while not env.done and not human.done:
                 human.turn(DOWN)
             elif event.key == K_SPACE:
                 start = True
-        
+                
     screen.fill(WHITE)
     if not start:
         continue
@@ -261,7 +289,7 @@ while not env.done and not human.done:
     d = env.turn_side(action, env.direction)
     
     env.step(d)
-    human.step(-1)
+    #human.step(-1)
         
     env.render()
     human.render()
