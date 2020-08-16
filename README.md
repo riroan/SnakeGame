@@ -30,3 +30,4 @@ Simple Console Snake Game
 
 ***
 ## 플레이 영상
+![Alt text](snake.gif)
