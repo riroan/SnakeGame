@@ -29,5 +29,8 @@ Simple Console Snake Game
 ###### 인공지능 vs 인간 플레이 가능
 
 ***
+
 ## 플레이 영상
 ![Alt text](snake.gif)
+
+***
