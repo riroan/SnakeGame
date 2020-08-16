@@ -1,7 +1,7 @@
 SnakeGame
 =========
 
-Simple Console Snake Game
+Simple Snake Game
 
 ## 특이사항
 ### C
